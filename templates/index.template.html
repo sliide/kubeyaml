@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Kubernetes YAML Validation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script defer src="js/bundle.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="hero is-light">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Kube YAML</h1>
+                <h2 class="subtitle">Validating kubernetes objects since 2018</h2>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="title">How to use this webpage</h1>
+            <p>
+                Paste your Kubernetes YAML in the text area below and see which
+                versions it is valid for.
+            </p>
+            <p class="is-size-7"> <span class="icon has-text-warning"><i class="fas fa-exclamation-triangle"></i></span>
+                Please only enter one YAML document at
+                a time, this will not split YAML documents with <code>---</code>
+                correctly.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent is-5">
+                <form class="tile is-child" id="input" method="POST" action="/validate">
+                    <button id="example" class="button is-success" type="button">Example YAML</button>
+                    <button class="button is-info is-pulled-right" type="submit">Validate</button>
+                    <textarea name="data" class="textarea is-family-code" placeholder="Paste YAML here!" rows="30"></textarea>
+                </form>
+            </div>
+            <div class="tile is-parent">
+                <div class="tile is-child">
+                    <div class="tabs is-fullwidth">
+                        <ul id="error-tabs">
+                        {{- range .Validators}}
+                            <li class="{{ if eq .Version $.Selected}}is-active{{- end}}" data-tab="{{.Version}}"><a>{{.Version}} Errors</a></li>
+                        {{- end}}
+                        </ul>
+                    </div>
+                    <div id="error-tab-contents">
+                        {{- range .Validators}}
+                        <div class="{{- if eq .Version $.Selected}}{{else}}is-display-none{{- end}}" data-content="{{.Version}}">
+                            <div><p></p></div>
+                            <pre class="is-invisible"></pre>
+                        </div>
+                        {{- end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">This is open source!</p>
+                    <figure class="title image is-64x64 figure-center">
+                        <a href="https://github.com/sliide/kubeyaml"><img src="img/github.png" /></a>
+                    </figure>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Find me on the Kubernetes slack (@cha)</p>
+                    <figure class="image is-64x64 figure-center">
+                        <a href="http://slack.k8s.io"><img src="img/slack.png" /></a>
+                    </figure>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Tweet at me!</p>
+                    <figure class="image is-64x64 figure-center">
+                        <a href="https://twitter.com/chuck_ha"><img src="img/twitter.png" /></a>
+                    </figure>
+                </div>
+            </div>
+        </nav>
+    </footer>
+</body>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125983530-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-125983530-1');
+</script>
+
+</html>
